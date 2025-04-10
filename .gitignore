@@ -1,0 +1,24 @@
+# Gradle
+.gradle/
+**/build/
+build/
+*/build/
+!gradle-wrapper.jar
+
+# Local configuration file (sdk path, keystore, etc)
+local.properties
+
+# IDE
+.idea/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Kotlin/Java/Android
+*.log
+*.hprof
+
+# Caches
+.cxx/
