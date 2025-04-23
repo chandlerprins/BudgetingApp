@@ -1,0 +1,70 @@
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_marginBottom="12dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:elevation="4dp"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/categoryTitle"
+            android:layout_width="135dp"
+            android:layout_height="85dp"
+            android:text="Bills"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/amountText"
+            android:text="R9500"
+            android:textColor="#0066CC"
+            android:textSize="16sp"
+            android:layout_marginTop="4dp"
+            android:layout_width="135dp"
+            android:layout_height="85dp"/>
+
+        <TextView
+            android:id="@+id/statusText"
+            android:text="Not Submitted"
+            android:textColor="#FF4444"
+            android:layout_marginTop="4dp"
+            android:textSize="14sp"
+            android:layout_width="135dp"
+            android:layout_height="85dp"/>
+
+        <TextView
+            android:id="@+id/expenseCount"
+            android:text="1 expense"
+            android:textSize="14sp"
+            android:textColor="#666666"
+            android:layout_width="135dp"
+            android:layout_height="85dp"/>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:text="View more"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:text="Delete"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="#D32F2F"
+                android:layout_marginStart="8dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
