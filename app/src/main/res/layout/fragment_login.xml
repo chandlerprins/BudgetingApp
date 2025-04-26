@@ -1,75 +1,171 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="#FFFFFF"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:padding="24dp"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="24dp">
+    android:layout_height="match_parent">
 
-    <LinearLayout
-        android:orientation="vertical"
+    <!-- App Logo -->
+    <ImageView
+        android:id="@+id/logoImageView"
+        android:layout_width="174dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="8dp"
+        android:src="@drawable/zarguard" />
+
+    <!-- App Name -->
+    <TextView
+        android:text="ZAR Guard"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:textColor="#000000"
+        android:layout_marginBottom="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <!-- Welcome Text -->
+    <TextView
+        android:text="Hello again, you’ve been missed!"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="#333333"
+        android:layout_marginBottom="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:text="Hi, Welcome Back!"
+        android:textSize="14sp"
+        android:textColor="#666666"
+        android:layout_marginBottom="12dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <!-- Input fields -->
+    <EditText
+        android:hint="Username"
+        android:inputType="text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal">
+        android:background="@android:drawable/edit_text"
+        android:padding="10dp"
+        android:layout_marginBottom="10dp" />
 
-        <TextView
-            android:text="Hi, Welcome Back!"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="16dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+    <EditText
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:drawable/edit_text"
+        android:padding="10dp"
+        android:layout_marginBottom="10dp" />
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="57dp"
-            android:hint="Username" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="57dp"
-            android:hint="Password"
-            android:inputType="textPassword" />
+    <!-- Remember Me and Forgot Password -->
+    <LinearLayout
+        android:layout_width="394dp"
+        android:layout_height="56dp"
+        android:layout_marginBottom="12dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
         <CheckBox
-            android:text="Remember Me"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <Button
-            android:text="Login"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="Remember Me" />
 
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="Forgot Password?"
-            android:textColor="#0066cc"
-            android:layout_marginTop="8dp"
-            android:layout_gravity="end"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:textColor="#0066CC"
+            android:textSize="14sp" />
+    </LinearLayout>
 
-        <TextView
-            android:text="Or With"
-            android:layout_marginTop="12dp"
-            android:gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+    <!-- Login Button -->
+    <Button
+        android:text="Login"
+        android:backgroundTint="#00A86B"
+        android:textColor="#FFFFFF"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp" />
 
+    <!-- Divider Text -->
+    <TextView
+        android:text="Or With"
+        android:textSize="14sp"
+        android:textColor="#666666"
+        android:gravity="center"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <!-- Facebook and Google Buttons -->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="2"
+        android:layout_marginTop="4dp">
+
+        <!-- Facebook -->
         <LinearLayout
             android:orientation="horizontal"
-            android:gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:gravity="center_vertical"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:background="#FFFFFF"
+            android:padding="8dp"
+            android:backgroundTint="#FFFFFF"
+            android:elevation="2dp">
 
-            <Button
-                android:text="Login with Facebook"
+            <ImageView
+                android:src="@drawable/facebook"
+                android:layout_width="24dp"
+                android:layout_height="24dp" />
+
+            <TextView
+                android:text="Facebook"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                android:layout_marginStart="8dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
-
-            <Button
-                android:text="Login with Google"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp" />
         </LinearLayout>
+
+        <!-- Google -->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="8dp"
+            android:background="#FFFFFF"
+            android:padding="8dp"
+            android:backgroundTint="#FFFFFF"
+            android:elevation="2dp">
+
+            <ImageView
+                android:src="@drawable/google"
+                android:layout_width="24dp"
+                android:layout_height="24dp" />
+
+            <TextView
+                android:text="Google"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                android:layout_marginStart="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
     </LinearLayout>
-</ScrollView>
+
+</LinearLayout>
