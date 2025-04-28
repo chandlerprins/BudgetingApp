@@ -10,138 +10,124 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <!-- Heading -->
         <TextView
-            android:text="Add Expense"
+            android:text="Add New Expense"
             android:textSize="22sp"
             android:textStyle="bold"
             android:textColor="#000000"
-            android:layout_marginBottom="16dp" />
+            android:layout_marginBottom="24dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <!-- Merchant Name -->
+        <TextView
+            android:text="Merchant Name"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
         <EditText
-            android:hint="Merchant Name"
+
+            android:id="@+id/merchantEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="12dp"
-            android:background="@android:drawable/edit_text" />
+            android:layout_marginBottom="16dp"
+            android:background="@android:drawable/edit_text"
+            android:hint="Enter merchant/store name"
+            android:padding="12dp" />
 
+        <!-- Amount -->
+        <TextView
+            android:text="Amount (ZAR)"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
         <EditText
-            android:hint="Amount"
+            android:id="@+id/amountEditText"
+            android:hint="Enter amount spent"
             android:inputType="numberDecimal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="12dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp"
             android:background="@android:drawable/edit_text" />
 
+        <!-- Date -->
+        <TextView
+            android:text="Date"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
         <EditText
-            android:hint="Date"
+            android:id="@+id/dateEditText"
+            android:hint="Select date"
             android:focusable="false"
             android:clickable="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="12dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp"
             android:background="@android:drawable/edit_text" />
 
+        <!-- Description -->
+        <TextView
+            android:text="Description (Optional)"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
         <EditText
-            android:hint="Description"
+            android:id="@+id/descriptionEditText"
+            android:hint="Optional description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="12dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp"
             android:background="@android:drawable/edit_text" />
+
+        <!-- Category Selection -->
+        <TextView
+            android:text="Select Category"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
         <Spinner
             android:id="@+id/categorySpinner"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp" />
+            android:layout_height="59dp"
+            android:layout_marginBottom="24dp" />
 
-        <CheckBox
-            android:text="Include VAT tax"
-            android:layout_marginTop="8dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <EditText
-            android:hint="VAT Tax (e.g. % or value)"
-            android:inputType="numberDecimal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="12dp"
-            android:layout_marginTop="8dp"
-            android:background="@android:drawable/edit_text" />
-
+        <!-- Upload Receipt -->
         <TextView
-            android:text="Attach Receipt"
+            android:text="Upload Receipt (Optional)"
             android:textStyle="bold"
             android:textSize="16sp"
-            android:layout_marginTop="16dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_marginTop="8dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <Button
-                android:text="Take Photo"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content" />
-
-            <Button
-                android:text="Choose from Gallery"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp" />
-        </LinearLayout>
-
-        <TextView
-            android:text="How do you want to input your expense?"
-            android:textStyle="bold"
-            android:layout_marginTop="24dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:weightSum="3">
-
-            <Button
-                android:text="Manual input"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content" />
-
-            <Button
-                android:text="Scan receipt"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_marginStart="8dp"
-                android:layout_height="wrap_content" />
-
-            <Button
-                android:text="Voice recognition"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_marginStart="8dp"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
+            android:layout_marginBottom="8dp" />
 
         <Button
-            android:text="Save Expense"
+            android:id="@+id/uploadGalleryButton"
+            android:text="Upload from Gallery"
+            android:backgroundTint="#0066CC"
             android:textColor="#FFFFFF"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp" />
+
+        <!-- Save Expense Button -->
+        <Button
+            android:id="@+id/saveExpenseButton"
+            android:text="Save Expense"
             android:backgroundTint="#00A86B"
-            android:layout_marginTop="24dp"
+            android:textColor="#FFFFFF"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-
     </LinearLayout>
 </ScrollView>

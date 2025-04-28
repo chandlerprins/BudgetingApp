@@ -1,59 +1,185 @@
 package vcmsa.projects.zarguard
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
+import android.util.Log
 import android.view.View
-import android.view.ViewGroup
+import android.widget.*
+import androidx.fragment.app.Fragment
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
 
-/**
- * A simple [Fragment] subclass.
- * Use the [DashboardFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class DashboardFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private lateinit var auth: FirebaseAuth
+    private lateinit var database: DatabaseReference
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    private lateinit var greetingTextView: TextView
+    private lateinit var budgetEditText: EditText
+    private lateinit var categoriesLayout: LinearLayout
+    private lateinit var addCategoryButton: Button
+    private lateinit var saveBudgetButton: Button
+    private lateinit var skipButton: Button
+
+    private val categoryViews = mutableListOf<View>()
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        auth = FirebaseAuth.getInstance()
+        database = FirebaseDatabase.getInstance().reference.child("users")
+
+        greetingTextView = view.findViewById(R.id.greetingTextView)
+        budgetEditText = view.findViewById(R.id.budgetEditText)
+        categoriesLayout = view.findViewById(R.id.categoriesLayout)
+        addCategoryButton = view.findViewById(R.id.addCategoryButton)
+        saveBudgetButton = view.findViewById(R.id.saveBudgetButton)
+        skipButton = view.findViewById(R.id.skipButton)
+
+        val currentUser = auth.currentUser
+        if (currentUser != null) {
+            loadUserData(currentUser.uid)
+        }
+
+        addCategoryButton.setOnClickListener {
+            addCategoryInputView()
+        }
+
+        saveBudgetButton.setOnClickListener {
+            saveBudgetAndCategories()
+        }
+
+        skipButton.setOnClickListener {
+            loadMainDashboard()
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_dashboard, container, false)
-    }
+    private fun loadUserData(uid: String) {
+        database.child(uid).addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    val hasBudget = snapshot.hasChild("budget")
+                    val hasCategories = snapshot.hasChild("categories")
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment DashboardFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            DashboardFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+                    if (!hasBudget || !hasCategories) {
+                        showBudgetSetup()
+                    } else {
+                        loadMainDashboard()
+                    }
+                } else {
+                    showBudgetSetup()
                 }
             }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("DashboardFragment", "Database error: ${error.message}")
+                Toast.makeText(context, "Database error: ${error.message}", Toast.LENGTH_SHORT).show()
+                loadMainDashboard()
+            }
+        })
+    }
+
+    private fun showBudgetSetup() {
+        greetingTextView.text = "Welcome New User! Set up your budget"
+
+        budgetEditText.visibility = View.VISIBLE
+        categoriesLayout.visibility = View.VISIBLE
+        addCategoryButton.visibility = View.VISIBLE
+        saveBudgetButton.visibility = View.VISIBLE
+        skipButton.visibility = View.VISIBLE
+    }
+
+    private fun loadMainDashboard() {
+        greetingTextView.text = "Welcome Back!"
+
+        budgetEditText.visibility = View.GONE
+        categoriesLayout.visibility = View.GONE
+        addCategoryButton.visibility = View.GONE
+        saveBudgetButton.visibility = View.GONE
+        skipButton.visibility = View.GONE
+
+        // If you want, you can load and show the user's budget and categories here
+        // Later we will build a separate "home screen" for dashboard after setup
+    }
+
+    private fun addCategoryInputView() {
+        val container = LinearLayout(requireContext())
+        container.orientation = LinearLayout.HORIZONTAL
+        container.layoutParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        )
+        container.weightSum = 2f
+
+        val nameEditText = EditText(requireContext())
+        nameEditText.hint = "Category Name"
+        nameEditText.layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
+        nameEditText.setBackgroundResource(android.R.drawable.edit_text)
+        nameEditText.setPadding(12, 12, 12, 12)
+
+        val limitEditText = EditText(requireContext())
+        limitEditText.hint = "Limit Amount"
+        limitEditText.inputType = android.text.InputType.TYPE_NUMBER_FLAG_DECIMAL
+        limitEditText.layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
+        limitEditText.setBackgroundResource(android.R.drawable.edit_text)
+        limitEditText.setPadding(12, 12, 12, 12)
+        (limitEditText.layoutParams as LinearLayout.LayoutParams).setMargins(8, 0, 0, 0)
+
+        container.addView(nameEditText)
+        container.addView(limitEditText)
+
+        categoriesLayout.addView(container)
+        categoryViews.add(container)
+    }
+
+    private fun saveBudgetAndCategories() {
+        val currentUser = auth.currentUser ?: return
+        val uid = currentUser.uid
+
+        val budgetAmount = budgetEditText.text.toString().trim().toDoubleOrNull()
+        if (budgetAmount == null) {
+            Toast.makeText(context, "Please enter a valid budget", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val categories = getCategoriesFromInput()
+        if (categories.isEmpty()) {
+            Toast.makeText(context, "Please add at least one category", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        // Save to Firebase
+        val userRef = database.child(uid)
+        userRef.child("budget").setValue(budgetAmount)
+        userRef.child("categories").setValue(categories)
+            .addOnSuccessListener {
+                Toast.makeText(context, "Budget and Categories saved!", Toast.LENGTH_SHORT).show()
+                loadMainDashboard()
+            }
+            .addOnFailureListener { error ->
+                Toast.makeText(context, "Save failed: ${error.message}", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    private fun getCategoriesFromInput(): Map<String, Double> {
+        val categories = mutableMapOf<String, Double>()
+        for (container in categoryViews) {
+            if (container is LinearLayout && container.childCount == 2) {
+                val nameEditText = container.getChildAt(0) as? EditText
+                val limitEditText = container.getChildAt(1) as? EditText
+
+                val categoryName = nameEditText?.text.toString().trim()
+                val categoryLimit = limitEditText?.text.toString().trim().toDoubleOrNull()
+
+                if (categoryName.isNotEmpty() && categoryLimit != null) {
+                    categories[categoryName] = categoryLimit
+                }
+            }
+        }
+        return categories
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        categoryViews.clear()
     }
 }

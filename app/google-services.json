@@ -1,0 +1,98 @@
+{
+  "project_info": {
+    "project_number": "835234286093",
+    "firebase_url": "https://bcad2025-chandlerprins-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "bcad2025-chandlerprins",
+    "storage_bucket": "bcad2025-chandlerprins.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:835234286093:android:fd71d612333a8a99602344",
+        "android_client_info": {
+          "package_name": "vcmsa.projects.firebasebasics"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "835234286093-j3vq1nsl1smpv3rdd6tmb7voo2mrrju1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBt3a25hf634hjmQ3g2ivTZnv1h3QECnrs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "835234286093-j3vq1nsl1smpv3rdd6tmb7voo2mrrju1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:835234286093:android:a4c272e695e23831602344",
+        "android_client_info": {
+          "package_name": "vcmsa.projects.firebaseobjects"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "835234286093-j3vq1nsl1smpv3rdd6tmb7voo2mrrju1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBt3a25hf634hjmQ3g2ivTZnv1h3QECnrs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "835234286093-j3vq1nsl1smpv3rdd6tmb7voo2mrrju1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:835234286093:android:28471f41cf195d82602344",
+        "android_client_info": {
+          "package_name": "vcmsa.projects.zarguard"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "835234286093-j3vq1nsl1smpv3rdd6tmb7voo2mrrju1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBt3a25hf634hjmQ3g2ivTZnv1h3QECnrs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "835234286093-j3vq1nsl1smpv3rdd6tmb7voo2mrrju1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

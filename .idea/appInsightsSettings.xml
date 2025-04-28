@@ -23,10 +23,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="vcmsa.projects.zarguard" />
+                  <option name="mobileSdkAppId" value="1:835234286093:android:28471f41cf195d82602344" />
+                  <option name="projectId" value="bcad2025-chandlerprins" />
+                  <option name="projectNumber" value="835234286093" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />
