@@ -8,17 +8,17 @@
 
     <item
         android:id="@+id/navigation_add_expense"
-        android:icon="@drawable/ic_launcher_background"
+        android:icon="@drawable/home"
         android:title="Add" />
 
     <item
         android:id="@+id/navigation_expenses"
-        android:icon="@drawable/ic_launcher_background"
+        android:icon="@drawable/home"
         android:title="Expenses" />
 
     <item
         android:id="@+id/navigation_more"
-        android:icon="@drawable/ic_launcher_background"
+        android:icon="@drawable/home"
         android:title="More" />
 
 </menu>

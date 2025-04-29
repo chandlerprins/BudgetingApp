@@ -1,59 +1,80 @@
 package vcmsa.projects.zarguard
 
+import CategorySummary
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import android.widget.TextView
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+class ExpenseReportListFragment : Fragment(R.layout.fragment_expense_report_list) {
 
-/**
- * A simple [Fragment] subclass.
- * Use the [fragment_expense_report_list.newInstance] factory method to
- * create an instance of this fragment.
- */
-class fragment_expense_report_list : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private lateinit var auth: FirebaseAuth
+    private lateinit var database: DatabaseReference
+    private lateinit var categoryRecycler: RecyclerView
+    private lateinit var totalExpensesText: TextView
+    private val categoryList = mutableListOf<CategorySummary>()
+    private lateinit var adapter: CategoryAdapter
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        auth = FirebaseAuth.getInstance()
+        database = FirebaseDatabase.getInstance().getReference("users")
+
+        categoryRecycler = view.findViewById(R.id.categoryRecyclerView)
+        totalExpensesText = view.findViewById(R.id.totalExpensesText)
+
+        adapter = CategoryAdapter(categoryList) { selectedCategory ->
+            // Navigate to detail fragment here (Step 2)
+            val fragment = ExpenseReportDetailFragment.newInstance(selectedCategory.name)
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.frameLayout, fragment)
+                .addToBackStack(null)
+                .commit()
         }
+
+        categoryRecycler.layoutManager = LinearLayoutManager(requireContext())
+        categoryRecycler.adapter = adapter
+
+        loadCategoryData()
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_expense_report_list, container, false)
-    }
+    private fun loadCategoryData() {
+        val uid = auth.currentUser?.uid ?: return
+        val userRef = database.child(uid)
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment fragment_expense_report_list.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            fragment_expense_report_list().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+        userRef.child("categories").get().addOnSuccessListener { categorySnap ->
+            categoryList.clear()
+            var totalAll = 0.0
+
+            for (categoryNode in categorySnap.children) {
+                val name = categoryNode.key ?: continue
+                val limit = categoryNode.getValue(Double::class.java) ?: 0.0
+
+                // Now calculate total spent under this category
+                userRef.child("expenses").orderByChild("category").equalTo(name)
+                    .addListenerForSingleValueEvent(object : ValueEventListener {
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            var totalSpent = 0.0
+                            for (expense in snapshot.children) {
+                                val amt = expense.child("amount").getValue(Double::class.java) ?: 0.0
+                                totalSpent += amt
+                            }
+
+                            val summary = CategorySummary(name, limit, totalSpent)
+                            categoryList.add(summary)
+                            totalAll += totalSpent
+                            adapter.notifyDataSetChanged()
+                            totalExpensesText.text = "Total Expenses: R%.2f".format(totalAll)
+                        }
+
+                        override fun onCancelled(error: DatabaseError) {
+                        }
+                    })
             }
+        }
     }
 }
